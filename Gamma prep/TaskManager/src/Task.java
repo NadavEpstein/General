@@ -8,7 +8,8 @@ public class Task {
     private String description;
     private boolean completed;
 
-    public Task(String title, String desc) {
+
+    public Task(String title, String desc, int ID) {
         if (title == null || desc == null) {
             System.out.println("NULL title or description. Task not created.");
             return;
@@ -18,8 +19,11 @@ public class Task {
         this.description = desc;
         this.completed = false;
 
-        IDCounter++;
-        this.ID = IDCounter;
+        this.ID = ID;
+    }
+
+    public Task copy () {
+        return new Task(title, description, ID);
     }
 
     public int getID() {
@@ -44,10 +48,12 @@ public class Task {
 
     @Override
     public String toString() {
+        String state;
+        if (completed) { state = "completed"; } else { state = "pending"; };
         return "[Task ID:" + this.ID
                 + "\n Title: " + this.title
                 + "\n Description: " + this.description
-                + "\n State: " + this.completed + "]";
+                + "\n State: " + state + "]";
     }
 
 }

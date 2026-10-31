@@ -3,41 +3,46 @@ import java.util.Map;
 
 public class TaskManager {
     private Map<Integer, Task> tasks;
+    private int taskCounter;
 
     public TaskManager () {
         this.tasks = new HashMap<>();
+        this.taskCounter = 0;
     }
 
-    /*
-    Create a task with a title and description.
-    Complete a task by providing its ID.
-    List all tasks.
-    List only pending tasks.
-    Delete a task by providing its ID.
-     */
+    public Map<Integer, Task> getTasks() {
+        Map<Integer, Task> tasksCopy = new HashMap<>();
+        for (Task t : tasks.values()) {
+            tasksCopy.put(t.getID(), t.copy());
+        }
+        return tasksCopy;
+    }
 
-    public void addTask(String title, String description) {
-        Task t = new Task(title, description);
+    public boolean exists(int ID) {
+        return tasks.get(ID) != null;
+    }
+
+    public Task getTask(int ID) {
+        if (!exists(ID)) {
+            return null;
+        } else {
+            return tasks.get(ID).copy();
+        }
+    }
+
+    public int addTask(String title, String description) {
+        this.taskCounter++;
+        Task t = new Task(title, description, taskCounter);
         tasks.put(t.getID(),t);
+
+        return t.getID();
     }
 
     public void completeTask(int ID) {
         tasks.get(ID).complete();
     }
 
-    public void listAllTasks() {
-        for (Task t : this.tasks.values()) {
-            System.out.println(t.toString());
-        }
-    }
 
-    public void listPendingTasks() {
-        for (Task t: tasks.values()) {
-            if (!t.isCompleted()) {
-                System.out.println(t.toString());
-            }
-        }
-    }
 
     public void removeTask(int ID) {
         tasks.remove(ID);
