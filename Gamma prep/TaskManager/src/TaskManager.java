@@ -2,8 +2,10 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class TaskManager {
+    public static Scanner reader = new Scanner(System.in);
     private Map<Integer, Task> tasks;
     private int taskCounter;
 
@@ -111,5 +113,37 @@ public class TaskManager {
         }
 
         return tasks;
+    }
+
+    public void changeTaskName(int ID) {
+        System.out.println("Enter task title: ");
+        String newTitle = reader.nextLine();
+        if (newTitle != null) {
+            tasks.get(ID).setTitle(newTitle);
+        }
+    }
+
+    public void changeTaskDescription(int ID) {
+        System.out.println("Enter task description: ");
+        String newDesc = reader.nextLine();
+        if (newDesc != null) {
+            tasks.get(ID).setTitle(newDesc);
+        }
+    }
+
+    public void changeTaskPriority(int ID) {
+        System.out.println("Enter task title: ");
+        String newTitle = reader.nextLine();
+        if (newTitle != null) {
+            tasks.get(ID).setPriority();
+        }
+    }
+
+    public void changeTaskDueDate(int ID) {
+        System.out.println("Enter task title: ");
+        String newTitle = reader.nextLine();
+        if (newTitle != null) {
+            tasks.get(ID).setDueDate();
+        }
     }
 }

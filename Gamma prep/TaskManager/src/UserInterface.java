@@ -138,5 +138,44 @@ public class UserInterface {
         }
     }
 
+    public void changeTaskName() {
+        System.out.println("Enter task ID: ");
+        int ID = reader.nextInt();
+        if (!manager.exists(ID)) {
+            System.out.println("Invalid task ID.");
+        } else {
+            manager.changeTaskName(ID);
+        }
+    }
+
+    public void changeTaskDescription() {
+        System.out.println("Enter task ID: ");
+        int ID = reader.nextInt();
+        if (!manager.exists(ID)) {
+            System.out.println("Invalid task ID.");
+        } else {
+            manager.changeTaskDescription(ID);
+        }
+    }
+
+    public void changeTaskPriority() {
+        System.out.println("Enter task ID: ");
+        int ID = reader.nextInt();
+        if (!manager.exists(ID)) {
+            System.out.println("Invalid task ID.");
+        } else {
+            manager.changeTaskPriority(ID);
+        }
+    }
+
+    public void changeTaskDueDate() {
+        System.out.println("Enter task ID: ");
+        int ID = reader.nextInt();
+        if (!manager.exists(ID)) {
+            System.out.println("Invalid task ID.");
+        } else {
+            manager.changeTaskDueDate(ID);
+        }
+    }
 
 }
