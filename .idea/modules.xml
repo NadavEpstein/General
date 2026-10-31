@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Gamma prep/Gamma prep.iml" filepath="$PROJECT_DIR$/Gamma prep/Gamma prep.iml" />
       <module fileurl="file://$PROJECT_DIR$/General.iml" filepath="$PROJECT_DIR$/General.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Gamma prep/TaskManager/TaskManager.iml" filepath="$PROJECT_DIR$/Gamma prep/TaskManager/TaskManager.iml" />
     </modules>
   </component>
 </project>
