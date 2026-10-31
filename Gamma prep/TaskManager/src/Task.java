@@ -122,11 +122,7 @@ public class Task {
 
             try {
                 dueDate = LocalDate.of(year, month, day);
-                if (dueDate.isAfter(LocalDate.now())) {
-                    invalidDate = false;
-                } else {
-                    System.out.println("Invalid date (date already passed).");
-                }
+                invalidDate = false;
             } catch (DateTimeException e) {
                 System.out.println("Invalid date. Try again.");
             }
