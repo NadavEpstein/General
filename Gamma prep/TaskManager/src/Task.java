@@ -13,28 +13,30 @@ public class Task {
 
 
     public Task(String title, String desc, int ID, Priority priority, LocalDate date) {
-        if (title.isBlank() || desc.isBlank()) {
-            System.out.println("NULL title or description. Task not created.");
-            return;
+
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Invalid title.");
+        }
+
+        if (desc == null || desc.isBlank()) {
+            throw new IllegalArgumentException("Invalid description.");
         }
 
         if (priority == null) {
-            System.out.println("NULL priority. Task not created.");
+            throw new IllegalArgumentException("Invalid priority.");
         }
 
         if (date == null) {
-            System.out.println("NULL due date. Task not created.");
+            throw new IllegalArgumentException("Invalid due date.");
         }
 
         this.title = title;
         this.description = desc;
-        this.completed = false;
+        this.ID = ID;
         this.priority = priority;
         this.dueDate = date;
-
-        this.ID = ID;
+        this.completed = false;
     }
-
     public Task copy () {
         Task copy =  new Task(title, description, ID, priority, dueDate);
         copy.completed = this.completed;
@@ -67,7 +69,7 @@ public class Task {
     }
 
     public void setTitle(String title) {
-        if (title.isBlank()) {
+        if (title == null || title.isBlank()) {
             System.out.println("Invalid title. Title remained " + this.title);
             return;
         }
@@ -76,7 +78,7 @@ public class Task {
     }
 
     public void setDescription(String description) {
-        if (description.isBlank()) {
+        if (description == null || description.isBlank()) {
             System.out.println("Invalid description. description remained:\n" + this.description);
             return;
         }
@@ -110,14 +112,21 @@ public class Task {
         while (invalidDate) {
             System.out.println("Task due date Year: ");
             int year = Input.reader.nextInt();
+            Input.reader.nextLine();
             System.out.println("Task due date month: ");
             int month = Input.reader.nextInt();
+            Input.reader.nextLine();
             System.out.println("Task due date day: ");
             int day = Input.reader.nextInt();
+            Input.reader.nextLine();
 
             try {
                 dueDate = LocalDate.of(year, month, day);
-                invalidDate = false;
+                if (dueDate.isAfter(LocalDate.now())) {
+                    invalidDate = false;
+                } else {
+                    System.out.println("Invalid date (date already passed).");
+                }
             } catch (DateTimeException e) {
                 System.out.println("Invalid date. Try again.");
             }
@@ -141,7 +150,8 @@ public class Task {
                 + "\n Title: " + this.title
                 + "\n Description: " + this.description
                 + "\n Priority: " + this.priority
-                + "\n State: " + state + "]";
+                + "\n State: " + state
+                + "\n Due date: " + this.dueDate.toString() + "]";
     }
 
 }

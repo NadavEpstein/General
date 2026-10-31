@@ -61,10 +61,13 @@ public class UserInterface {
         while (invalidDate) {
             System.out.println("Task due date Year: ");
             int year = Input.reader.nextInt();
+            Input.reader.nextLine();
             System.out.println("Task due date month: ");
             int month = Input.reader.nextInt();
+            Input.reader.nextLine();
             System.out.println("Task due date day: ");
             int day = Input.reader.nextInt();
+            Input.reader.nextLine();
 
             try {
                 dueDate = LocalDate.of(year, month, day);
@@ -81,6 +84,7 @@ public class UserInterface {
     public void comleteTask() {
         System.out.println("Enter task ID: ");
         int ID = Input.reader.nextInt();
+        Input.reader.nextLine();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID. No task Completed.");
         } else if (manager.getTask(ID).isCompleted()) {
@@ -105,6 +109,7 @@ public class UserInterface {
     public void removeTask() {
         System.out.println("Enter task ID: ");
         int ID = Input.reader.nextInt();
+        Input.reader.nextLine();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID. No task removed.");
         } else {
@@ -147,26 +152,43 @@ public class UserInterface {
     public void changeTaskName() {
         System.out.println("Enter task ID: ");
         int ID = Input.reader.nextInt();
+        Input.reader.nextLine();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID.");
+            return;
+        }
+
+        System.out.println("Enter task description: ");
+        String newTitle = Input.reader.nextLine();
+        if (!newTitle.isBlank()) {
+            manager.changeTaskName(ID, newTitle);
         } else {
-            manager.changeTaskName(ID);
+            System.out.println("Invalid title. Title not changed.");
         }
     }
 
     public void changeTaskDescription() {
         System.out.println("Enter task ID: ");
         int ID = Input.reader.nextInt();
+        Input.reader.nextLine();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID.");
+            return;
+        }
+
+        System.out.println("Enter task description: ");
+        String newDesc = Input.reader.nextLine();
+        if (!newDesc.isBlank()) {
+            manager.changeTaskDescription(ID, newDesc);
         } else {
-            manager.changeTaskDescription(ID);
+            System.out.println("Invalid description. Description not changed.");
         }
     }
 
     public void changeTaskPriority() {
         System.out.println("Enter task ID: ");
         int ID = Input.reader.nextInt();
+        Input.reader.nextLine();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID.");
         } else {
@@ -177,6 +199,7 @@ public class UserInterface {
     public void changeTaskDueDate() {
         System.out.println("Enter task ID: ");
         int ID = Input.reader.nextInt();
+        Input.reader.nextLine();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID.");
         } else {

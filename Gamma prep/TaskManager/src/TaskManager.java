@@ -31,11 +31,16 @@ public class TaskManager {
     }
 
     public int addTask(String title, String description, Priority priority, LocalDate dueDate) {
-        this.taskCounter++;
-        Task t = new Task(title, description, taskCounter, priority, dueDate);
-        tasks.put(t.getID(),t);
+        try {
+            Task t = new Task(title, description, taskCounter + 1, priority, dueDate);
+            this.taskCounter++;
+            tasks.put(t.getID(),t);
+            return t.getID();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
 
-        return t.getID();
+        return -1;
     }
 
     public void completeTask(int ID) {
@@ -91,27 +96,19 @@ public class TaskManager {
 
         List<Task> tasks = new ArrayList<>();
         for (Task t : this.tasks.values()) {
-            tasks.add(t);
+            tasks.add(t.copy());
         }
 
         tasks.sort(byDueDate);
         return tasks;
     }
 
-    public void changeTaskName(int ID) {
-        System.out.println("Enter task title: ");
-        String newTitle = Input.reader.nextLine();
-        if (newTitle.isBlank()) {
-            tasks.get(ID).setTitle(newTitle);
-        }
+    public void changeTaskName(int ID, String title) {
+        tasks.get(ID).setTitle(title);
     }
 
-    public void changeTaskDescription(int ID) {
-        System.out.println("Enter task description: ");
-        String newDesc = Input.reader.nextLine();
-        if (newDesc.isBlank()) {
-            tasks.get(ID).setDescription(newDesc);
-        }
+    public void changeTaskDescription(int ID, String desc) {
+        tasks.get(ID).setDescription(desc);
     }
 
     public void changeTaskPriority(int ID) {

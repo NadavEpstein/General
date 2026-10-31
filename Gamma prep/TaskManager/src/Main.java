@@ -13,6 +13,7 @@ public class Main {
                                 + "5: List tasks in a specific order\n");
 
             int choice = Input.reader.nextInt();
+            Input.reader.nextLine();
             if (0 > choice || choice > 5) {
                 System.out.println("Invalid choice. please Enter another choice.");
                 continue;
@@ -30,6 +31,7 @@ public class Main {
                     break;
                 case 3:
                     userInterface.comleteTask();
+                    break;
                 case 4:
                     userInterface.removeTask();
                     break;
@@ -50,6 +52,7 @@ public class Main {
                 + "3: Task Priority\n"
                 + "4: Task due date\n");
         int choice = Input.reader.nextInt();
+        Input.reader.nextLine();
         if (0 > choice || choice > 4) {
             System.out.println("Invalid choice. please Enter another choice.");
         }
@@ -79,6 +82,7 @@ public class Main {
                 + "4: List by priority\n"
                 + "5: List by urgency");
         int choice = Input.reader.nextInt();
+        Input.reader.nextLine();
         if (0 > choice || choice > 5) {
             System.out.println("Invalid choice. please Enter another choice.");
         }
