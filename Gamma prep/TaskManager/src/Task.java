@@ -1,7 +1,4 @@
 public class Task {
-    // since each task will be assigned an id, we will have the Id number
-    // based on the chronological time when it was created
-    private static int IDCounter = 0;
 
     private int ID;
     private String title;
@@ -13,7 +10,6 @@ public class Task {
         if (title == null || desc == null) {
             System.out.println("NULL title or description. Task not created.");
             return;
-
         }
         this.title = title;
         this.description = desc;
@@ -23,7 +19,9 @@ public class Task {
     }
 
     public Task copy () {
-        return new Task(title, description, ID);
+        Task copy =  new Task(title, description, ID);
+        copy.completed = this.completed;
+        return copy;
     }
 
     public int getID() {

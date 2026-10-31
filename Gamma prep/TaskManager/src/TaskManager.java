@@ -39,7 +39,11 @@ public class TaskManager {
     }
 
     public void completeTask(int ID) {
-        tasks.get(ID).complete();
+        if (!exists(ID)) {
+            System.out.println("Invalid ID. No task completed.");
+        } else {
+            tasks.get(ID).complete();
+        }
     }
 
 
