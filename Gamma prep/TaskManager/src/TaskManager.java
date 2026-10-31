@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,9 +32,9 @@ public class TaskManager {
         }
     }
 
-    public int addTask(String title, String description) {
+    public int addTask(String title, String description, Priority priority, LocalDate dueDate) {
         this.taskCounter++;
-        Task t = new Task(title, description, taskCounter);
+        Task t = new Task(title, description, taskCounter, priority, dueDate);
         tasks.put(t.getID(),t);
 
         return t.getID();
@@ -46,9 +48,68 @@ public class TaskManager {
         }
     }
 
-
-
     public void removeTask(int ID) {
         tasks.remove(ID);
+    }
+
+    public Map<Integer, Task> getPendingTasks() {
+        Map<Integer, Task> tasksCopy = new HashMap<>();
+        for (Task t : tasks.values()) {
+            if (!t.isCompleted()){
+                tasksCopy.put(t.getID(), t.copy());
+            }
+        }
+        return tasksCopy;
+    }
+
+    public Map<Integer, Task> getOverdueTasks() {
+        Map<Integer, Task> tasksCopy = new HashMap<>();
+        for (Task t : tasks.values()) {
+            if (t.isOverdue()){
+                tasksCopy.put(t.getID(), t.copy());
+            }
+        }
+        return tasksCopy;
+    }
+
+    public Map<Integer, Task> getPriorityTasks(Priority priority) {
+        if (priority == null) {
+            System.out.println("Invalid priority.");
+            return null;
+        }
+
+        Map<Integer, Task> tasksCopy = new HashMap<>();
+        for (Task t : tasks.values()) {
+            if (t.getPriority().equals(priority)){
+                tasksCopy.put(t.getID(), t.copy());
+            }
+        }
+        return tasksCopy;
+    }
+
+    public Collection<Task> getOrderedTasks() {
+        // i need a copy to not harm the original tasks in the process.
+        Collection<Task> tasks = this.getTasks().values();
+
+        Task[] orderedTasks = new Task[tasks.size()];
+        int index = 0;
+
+        Task mostUrgent = null;
+        for (Task t : tasks) {
+            mostUrgent = t;
+            for (Task other : tasks) {
+                if (mostUrgent.getID() == t.getID()) continue;
+
+                if (other.getDueDate().isBefore(t.getDueDate())) {
+                    mostUrgent = other;
+                }
+            }
+
+            tasks.remove(mostUrgent);
+            orderedTasks[index] = mostUrgent;
+            index++;
+        }
+
+        return tasks;
     }
 }
