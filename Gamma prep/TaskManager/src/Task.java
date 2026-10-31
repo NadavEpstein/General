@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class Task {
 
-    public static Scanner reader = new Scanner (System.in);
-
     private int ID;
     private String title;
     private String description;
@@ -15,10 +13,19 @@ public class Task {
 
 
     public Task(String title, String desc, int ID, Priority priority, LocalDate date) {
-        if (title == null || desc == null) {
+        if (title.isBlank() || desc.isBlank()) {
             System.out.println("NULL title or description. Task not created.");
             return;
         }
+
+        if (priority == null) {
+            System.out.println("NULL priority. Task not created.");
+        }
+
+        if (date == null) {
+            System.out.println("NULL due date. Task not created.");
+        }
+
         this.title = title;
         this.description = desc;
         this.completed = false;
@@ -60,7 +67,7 @@ public class Task {
     }
 
     public void setTitle(String title) {
-        if (title == null) {
+        if (title.isBlank()) {
             System.out.println("Invalid title. Title remained " + this.title);
             return;
         }
@@ -69,7 +76,7 @@ public class Task {
     }
 
     public void setDescription(String description) {
-        if (description == null) {
+        if (description.isBlank()) {
             System.out.println("Invalid description. description remained:\n" + this.description);
             return;
         }
@@ -88,7 +95,8 @@ public class Task {
         while (invalidPriority) {
             System.out.println("Task priority: ");
             try {
-                p = Priority.valueOf(reader.nextLine().toUpperCase());
+                p = Priority.valueOf(Input.reader.nextLine().toUpperCase());
+                invalidPriority = false;
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid priority. Enter one of LOW, MEDIUM, HIGH.");
             }
@@ -101,11 +109,11 @@ public class Task {
         boolean invalidDate = true;
         while (invalidDate) {
             System.out.println("Task due date Year: ");
-            int year = reader.nextInt();
+            int year = Input.reader.nextInt();
             System.out.println("Task due date month: ");
-            int month = reader.nextInt();
+            int month = Input.reader.nextInt();
             System.out.println("Task due date day: ");
-            int day = reader.nextInt();
+            int day = Input.reader.nextInt();
 
             try {
                 dueDate = LocalDate.of(year, month, day);

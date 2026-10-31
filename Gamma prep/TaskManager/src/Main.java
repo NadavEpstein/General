@@ -1,8 +1,4 @@
-import java.util.Scanner;
-
 public class Main {
-    public static Scanner reader = new Scanner(System.in);
-
     public static void main(String[] args) {
 
         UserInterface userInterface = new UserInterface();
@@ -16,7 +12,7 @@ public class Main {
                                 + "4: Delete a task\n"
                                 + "5: List tasks in a specific order\n");
 
-            int choice = reader.nextInt();
+            int choice = Input.reader.nextInt();
             if (0 > choice || choice > 5) {
                 System.out.println("Invalid choice. please Enter another choice.");
                 continue;
@@ -39,6 +35,7 @@ public class Main {
                     break;
                 case 5:
                     listTasks(userInterface);
+                    break;
 
                 default:
 
@@ -52,19 +49,23 @@ public class Main {
                 + "2: Task description\n"
                 + "3: Task Priority\n"
                 + "4: Task due date\n");
-        int choice = reader.nextInt();
+        int choice = Input.reader.nextInt();
         if (0 > choice || choice > 4) {
             System.out.println("Invalid choice. please Enter another choice.");
         }
         switch (choice) {
             case 1:
                 userInterface.changeTaskName();
+                break;
             case 2:
                 userInterface.changeTaskDescription();
+                break;
             case 3:
                 userInterface.changeTaskPriority();
+                break;
             case 4:
                 userInterface.changeTaskDueDate();
+                break;
             default:
 
         }
@@ -77,21 +78,26 @@ public class Main {
                 + "3: List overdue\n"
                 + "4: List by priority\n"
                 + "5: List by urgency");
-        int choice = reader.nextInt();
+        int choice = Input.reader.nextInt();
         if (0 > choice || choice > 5) {
             System.out.println("Invalid choice. please Enter another choice.");
         }
         switch (choice) {
             case 1:
                 userInterface.listAllTasks();
+                break;
             case 2:
                 userInterface.listPendingTasks();
+                break;
             case 3:
                 userInterface.listOverdueTasks();
+                break;
             case 4:
                 userInterface.listPriorityTasks();
+                break;
             case 5:
                 userInterface.listOrderedTasks();
+                break;
             default:
         }
     }

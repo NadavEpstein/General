@@ -1,11 +1,7 @@
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class TaskManager {
-    public static Scanner reader = new Scanner(System.in);
     private Map<Integer, Task> tasks;
     private int taskCounter;
 
@@ -89,60 +85,43 @@ public class TaskManager {
         return tasksCopy;
     }
 
-    public Collection<Task> getOrderedTasks() {
-        // i need a copy to not harm the original tasks in the process.
-        Collection<Task> tasks = this.getTasks().values();
+    public List<Task> getOrderedTasks() {
+        Comparator<Task> byDueDate =
+                (t1, t2) -> t1.getDueDate().compareTo(t2.getDueDate());
 
-        Task[] orderedTasks = new Task[tasks.size()];
-        int index = 0;
-
-        Task mostUrgent = null;
-        for (Task t : tasks) {
-            mostUrgent = t;
-            for (Task other : tasks) {
-                if (mostUrgent.getID() == t.getID()) continue;
-
-                if (other.getDueDate().isBefore(t.getDueDate())) {
-                    mostUrgent = other;
-                }
-            }
-
-            tasks.remove(mostUrgent);
-            orderedTasks[index] = mostUrgent;
-            index++;
+        List<Task> tasks = new ArrayList<>();
+        for (Task t : this.tasks.values()) {
+            tasks.add(t);
         }
 
+        tasks.sort(byDueDate);
         return tasks;
     }
 
     public void changeTaskName(int ID) {
         System.out.println("Enter task title: ");
-        String newTitle = reader.nextLine();
-        if (newTitle != null) {
+        String newTitle = Input.reader.nextLine();
+        if (newTitle.isBlank()) {
             tasks.get(ID).setTitle(newTitle);
         }
     }
 
     public void changeTaskDescription(int ID) {
         System.out.println("Enter task description: ");
-        String newDesc = reader.nextLine();
-        if (newDesc != null) {
-            tasks.get(ID).setTitle(newDesc);
+        String newDesc = Input.reader.nextLine();
+        if (newDesc.isBlank()) {
+            tasks.get(ID).setDescription(newDesc);
         }
     }
 
     public void changeTaskPriority(int ID) {
-        System.out.println("Enter task title: ");
-        String newTitle = reader.nextLine();
-        if (newTitle != null) {
+        if (exists(ID)) {
             tasks.get(ID).setPriority();
         }
     }
 
     public void changeTaskDueDate(int ID) {
-        System.out.println("Enter task title: ");
-        String newTitle = reader.nextLine();
-        if (newTitle != null) {
+        if (exists(ID)) {
             tasks.get(ID).setDueDate();
         }
     }

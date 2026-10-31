@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class UserInterface {
-    public static Scanner reader = new Scanner(System.in);
     private TaskManager manager;
 
     public UserInterface() {
@@ -21,8 +20,8 @@ public class UserInterface {
         boolean invalidName = true;
         while (invalidName) {
             System.out.println("Task name: ");
-            name = reader.nextLine();
-            if (name == null) {
+            name = Input.reader.nextLine();
+            if (name.isBlank()) {
                 System.out.println("Invalid name. Enter valid name:");
             } else {
                 invalidName = false;
@@ -32,8 +31,8 @@ public class UserInterface {
         boolean invalidDesc = true;
         while (invalidDesc) {
             System.out.println("Task description (1 line only): ");
-            desc = reader.nextLine();
-            if (desc == null) {
+            desc = Input.reader.nextLine();
+            if (desc.isBlank()) {
                 System.out.println("Invalid description. Enter valid description: ");
             } else {
                 invalidDesc = false;
@@ -44,22 +43,28 @@ public class UserInterface {
         while (invalidPriority) {
             System.out.println("Task priority (LOW, MEDIUM, HIGH): ");
 
-            priority = Priority.valueOf(reader.nextLine());
-            if (desc == null) {
-                System.out.println("Invalid priority. Enter valid priority (LOW, MEDIUM, HIGH): ");
-            } else {
-                invalidPriority = false;
+            String input = Input.reader.nextLine();
+            try {
+                priority = Priority.valueOf(input.toUpperCase());
+                if (priority == null) {
+                    System.out.println("Invalid priority. Enter valid priority (LOW, MEDIUM, HIGH): ");
+                } else {
+                    invalidPriority = false;
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid priority. Enter one of LOW, MEDIUM, HIGH.");
             }
+
         }
 
         boolean invalidDate = true;
         while (invalidDate) {
             System.out.println("Task due date Year: ");
-            int year = reader.nextInt();
+            int year = Input.reader.nextInt();
             System.out.println("Task due date month: ");
-            int month = reader.nextInt();
+            int month = Input.reader.nextInt();
             System.out.println("Task due date day: ");
-            int day = reader.nextInt();
+            int day = Input.reader.nextInt();
 
             try {
                 dueDate = LocalDate.of(year, month, day);
@@ -75,7 +80,7 @@ public class UserInterface {
 
     public void comleteTask() {
         System.out.println("Enter task ID: ");
-        int ID = reader.nextInt();
+        int ID = Input.reader.nextInt();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID. No task Completed.");
         } else if (manager.getTask(ID).isCompleted()) {
@@ -99,7 +104,7 @@ public class UserInterface {
 
     public void removeTask() {
         System.out.println("Enter task ID: ");
-        int ID = reader.nextInt();
+        int ID = Input.reader.nextInt();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID. No task removed.");
         } else {
@@ -118,10 +123,11 @@ public class UserInterface {
         boolean invalidPriority = true;
         while (invalidPriority) {
             System.out.println("Enter wanted priority: ");
-            String wanted = reader.nextLine();
+            String wanted = Input.reader.nextLine();
 
             try {
                 wantedPriority = Priority.valueOf(wanted.toUpperCase());
+                invalidPriority = false;
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid priority. Enter one of LOW, MEDIUM, HIGH.");
             }
@@ -140,7 +146,7 @@ public class UserInterface {
 
     public void changeTaskName() {
         System.out.println("Enter task ID: ");
-        int ID = reader.nextInt();
+        int ID = Input.reader.nextInt();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID.");
         } else {
@@ -150,7 +156,7 @@ public class UserInterface {
 
     public void changeTaskDescription() {
         System.out.println("Enter task ID: ");
-        int ID = reader.nextInt();
+        int ID = Input.reader.nextInt();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID.");
         } else {
@@ -160,7 +166,7 @@ public class UserInterface {
 
     public void changeTaskPriority() {
         System.out.println("Enter task ID: ");
-        int ID = reader.nextInt();
+        int ID = Input.reader.nextInt();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID.");
         } else {
@@ -170,7 +176,7 @@ public class UserInterface {
 
     public void changeTaskDueDate() {
         System.out.println("Enter task ID: ");
-        int ID = reader.nextInt();
+        int ID = Input.reader.nextInt();
         if (!manager.exists(ID)) {
             System.out.println("Invalid task ID.");
         } else {
