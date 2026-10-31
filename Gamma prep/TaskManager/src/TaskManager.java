@@ -65,6 +65,16 @@ public class TaskManager {
         return tasksCopy;
     }
 
+    public Map<Integer, Task> getCompletedTasks() {
+        Map<Integer, Task> tasksCopy = new HashMap<>();
+        for (Task t : tasks.values()) {
+            if (t.isCompleted()){
+                tasksCopy.put(t.getID(), t.copy());
+            }
+        }
+        return tasksCopy;
+    }
+
     public Map<Integer, Task> getOverdueTasks() {
         Map<Integer, Task> tasksCopy = new HashMap<>();
         for (Task t : tasks.values()) {
@@ -121,5 +131,62 @@ public class TaskManager {
         if (exists(ID)) {
             tasks.get(ID).setDueDate();
         }
+    }
+
+    public List<Task> taggedTasks(String tag) {
+        if (tag == null || tag.isBlank()) {
+            System.out.println("Invalid tag. Returning NULL.");
+            return null;
+        }
+
+        List<Task> taggedTasks = new ArrayList<>();
+        for (Task t : tasks.values()) {
+            if (t.hasTag(tag)) {
+                taggedTasks.add(t);
+            }
+        }
+
+        return taggedTasks;
+    }
+
+    public List<Task> taggedTasks(List<String> tags) {
+        for (String s : tags) {
+            if (s == null || s.isBlank()) {
+                System.out.println("Invalid tag. Returning NULL.");
+                return null;
+            }
+        }
+
+        List<Task> taggedTasks = new ArrayList<>();
+        for (String s : tags) {
+            for (Task t : tasks.values()) {
+                if (t.hasTag(s)) {
+                    taggedTasks.add(t);
+                }
+            }
+        }
+
+        return taggedTasks;
+    }
+
+    public List<Task> allTagsTasks(List<String> tags) {
+        for (String s : tags) {
+            if (s == null || s.isBlank()) {
+                System.out.println("Invalid tag. Returning NULL.");
+                return null;
+            }
+        }
+
+        List<Task> taggedTasks = new ArrayList<>();
+        taggedTasks.addAll(tasks.values());
+        for (String s : tags) {
+            for (Task t : taggedTasks) {
+                if (!t.hasTag(s)) {
+                    taggedTasks.remove(t);
+                }
+            }
+        }
+
+        return taggedTasks;
     }
 }

@@ -10,11 +10,12 @@ public class Main {
                                 + "2: Edit tasks\n"
                                 + "3: Complete a task\n"
                                 + "4: Delete a task\n"
-                                + "5: List tasks in a specific order\n");
+                                + "5: List tasks in a specific order\n"
+                                + "6: List tasks according to tags\n");
 
             int choice = Input.reader.nextInt();
             Input.reader.nextLine();
-            if (0 > choice || choice > 5) {
+            if (0 > choice || choice > 6) {
                 System.out.println("Invalid choice. please Enter another choice.");
                 continue;
             }
@@ -38,7 +39,9 @@ public class Main {
                 case 5:
                     listTasks(userInterface);
                     break;
-
+                case 6:
+                    listTags(userInterface);
+                    break;
                 default:
 
             }
@@ -53,7 +56,7 @@ public class Main {
                 + "4: Task due date\n");
         int choice = Input.reader.nextInt();
         Input.reader.nextLine();
-        if (0 > choice || choice > 4) {
+        if (1 > choice || choice > 4) {
             System.out.println("Invalid choice. please Enter another choice.");
         }
         switch (choice) {
@@ -80,10 +83,11 @@ public class Main {
                 + "2: List pending\n"
                 + "3: List overdue\n"
                 + "4: List by priority\n"
-                + "5: List by urgency");
+                + "5: List by urgency"
+                + "6: List completed");
         int choice = Input.reader.nextInt();
         Input.reader.nextLine();
-        if (0 > choice || choice > 5) {
+        if (1 > choice || choice > 6) {
             System.out.println("Invalid choice. please Enter another choice.");
         }
         switch (choice) {
@@ -101,6 +105,34 @@ public class Main {
                 break;
             case 5:
                 userInterface.listOrderedTasks();
+                break;
+            case 6:
+                userInterface.listCompletedTasks();
+                break;
+            default:
+        }
+    }
+
+    public static void listTags(UserInterface userInterface) {
+        System.out.println("Choose an option to tag:\n"
+                + "1: List all tasks containing a particular tag.\n"
+                + "2: List all tasks containing any of several specified tags.\n"
+                + "3: List all tasks containing all of several specified tags.\n");
+
+        int choice = Input.reader.nextInt();
+        Input.reader.nextLine();
+        if (1 > choice || choice > 3) {
+            System.out.println("Invalid choice. please Enter another choice.");
+        }
+        switch (choice) {
+            case 1:
+                userInterface.singleTagTasks();
+                break;
+            case 2:
+                userInterface.taggedTasks();
+                break;
+            case 3:
+                userInterface.AllTagsTasks();
                 break;
             default:
         }

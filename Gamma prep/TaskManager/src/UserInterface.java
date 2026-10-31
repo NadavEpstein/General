@@ -1,9 +1,6 @@
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserInterface {
     private TaskManager manager;
@@ -102,6 +99,12 @@ public class UserInterface {
 
     public void listPendingTasks() {
         for (Task t: manager.getPendingTasks().values()) {
+            System.out.println(t.toString());
+        }
+    }
+
+    public void listCompletedTasks() {
+        for (Task t: manager.getCompletedTasks().values()) {
             System.out.println(t.toString());
         }
     }
@@ -207,4 +210,67 @@ public class UserInterface {
         }
     }
 
+    public void singleTagTasks() {
+        System.out.println("Enter tag: ");
+        String tag = Input.reader.nextLine();
+        if (tag == null || tag.isBlank()) {
+            System.out.println("Invalid tag.");
+            return;
+        }
+
+        List<Task> taggedTasks = manager.taggedTasks(tag);
+        for (Task t : taggedTasks) {
+            System.out.println(t);
+        }
+    }
+
+    public List<String> getTags() {
+        List<String> tags = new ArrayList<>();
+        boolean quit = false;
+        while (!quit) {
+            System.out.println("Enter tag name:\n (if you wish to finish entering tags, enter 'quit')");
+            String input = Input.reader.nextLine();
+            if (input.equals("quit")) {
+                quit = true;
+                continue;
+            } else if (input.isBlank()) {
+                System.out.println("Invalid tag.");
+            } else {
+                tags.add(input);
+            }
+        }
+
+        return tags;
+    }
+
+    public void taggedTasks() {
+        List<String> tags = getTags();
+        for (String s : tags) {
+            if (s == null || s.isBlank()) {
+                System.out.println("Invalid tag.");
+                return;
+            }
+        }
+
+        List<Task> taggedTasks = manager.taggedTasks(tags);
+        for (Task t : taggedTasks) {
+            System.out.println(t);
+        }
+    }
+
+    public void AllTagsTasks() {
+        List<String> tags = getTags();
+
+        for (String s : tags) {
+            if (s == null || s.isBlank()) {
+                System.out.println("Invalid tag.");
+                return;
+            }
+        }
+
+        List<Task> taggedTasks = manager.allTagsTasks(tags);
+        for (Task t : taggedTasks) {
+            System.out.println(t);
+        }
+    }
 }
