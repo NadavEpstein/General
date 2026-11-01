@@ -51,6 +51,14 @@ public class ProductManager {
         return products.get(id).copy();
     }
 
+    public static void addProduct(Product product) {
+        if (product == null || exists(product.getID())) {
+            throw new IllegalArgumentException("Invalid or duplicate product");
+        }
+
+        products.put(product.getID(), product.copy());
+    }
+
     public static Product addExistingProduct(int id, int quantity) {
         if (!exists(id)) {
             System.out.println("No such product");

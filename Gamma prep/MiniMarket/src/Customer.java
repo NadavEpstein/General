@@ -28,7 +28,7 @@ public class Customer {
         return name;
     }
 
-    public int getMail() {
+    public String getMail() {
         return mail;
     }
 
