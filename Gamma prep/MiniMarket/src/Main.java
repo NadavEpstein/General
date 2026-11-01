@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         Shop shop = new Shop();
-        ProductManager manager = shop.getManager();
+        ProductManager manager = shop.getProductManager();
 
         Product laptop = new Product(1, "Laptop", 3000, 5);
         Product mouse = new Product(2, "Mouse", 100, 10);

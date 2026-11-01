@@ -8,6 +8,7 @@ public class Cart {
     private final ProductManager manager;
     private final Customer customer;
     private final Map<Integer, Integer> products = new HashMap<>();
+    private int ordersMade;
 
     public Cart(Customer customer, Shop shop) {
         if (customer == null || shop == null)
@@ -15,7 +16,12 @@ public class Cart {
 
         this.customer = customer;
         this.shop = shop;
-        this.manager = shop.getManager();
+        this.manager = shop.getProductManager();
+        this.ordersMade = 0;
+    }
+
+    public boolean isEmpty() {
+        return products.isEmpty();
     }
 
     public List<Product> getProducts() {
@@ -55,12 +61,35 @@ public class Cart {
             products.put(id, current - quantity);
     }
 
-    public int calculateTotalPrice() {
+    public int getTotalPrice() {
         int total = 0;
 
         for (Product p : getProducts())
             total += p.getPrice() * getQuantity(p.getID());
 
         return total;
+    }
+
+    public Order placeOrder() {
+        /*
+        effectively, this functions moves over the reserved
+        products from the cart to an order.
+        the price of the order will be the price when it was made,
+        or in other words the current price of the cart.
+         */
+        if (this.isEmpty()) {
+            System.out.println("Cant order an empty cart.");
+            return null;
+        }
+
+        ordersMade++;
+        Map<Integer, Integer> prodCopies = new HashMap<>();
+        for (int id : products.keySet()) {
+            prodCopies.put(id, getQuantity(id));
+        }
+
+        Order order = new Order(shop, customer, ordersMade, products, getTotalPrice());
+        this.products.clear();
+        return order;
     }
 }

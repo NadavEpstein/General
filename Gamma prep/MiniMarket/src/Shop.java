@@ -1,11 +1,17 @@
 public class Shop {
-    private final ProductManager manager;
+    private final ProductManager productManager;
+    private final OrderManager orderManager;
 
     public Shop() {
-        manager = new ProductManager();
+        productManager = new ProductManager();
+        orderManager = new OrderManager();
     }
 
-    public ProductManager getManager() {
-        return manager;
+    public ProductManager getProductManager() {
+        return productManager;
+    }
+
+    public OrderManager getOrderManager() {
+        return orderManager;
     }
 }
