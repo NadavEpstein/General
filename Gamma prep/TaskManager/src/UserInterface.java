@@ -273,4 +273,18 @@ public class UserInterface {
             System.out.println(t);
         }
     }
+
+    public void listTasksRetainingTo() {
+        System.out.println("Enter keyword: ");
+        String keyword = Input.reader.nextLine();
+
+        if (keyword.isBlank()) {
+            System.out.println("Invalid keyword.");
+            return;
+        }
+
+        for (Task t: manager.getTasksRetainingTo(keyword)) {
+            System.out.println(t.toString());
+        }
+    }
 }

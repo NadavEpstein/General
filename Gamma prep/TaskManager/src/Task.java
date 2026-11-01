@@ -161,6 +161,16 @@ public class Task {
         return tags.contains(tag.toUpperCase());
     }
 
+    public boolean retainsTo(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            System.out.println("Invalid keyword.");
+            return false;
+        }
+
+        return title.contains(keyword) || description.contains(keyword);
+
+    }
+
     @Override
     public String toString() {
         String state;

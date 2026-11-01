@@ -84,10 +84,11 @@ public class Main {
                 + "3: List overdue\n"
                 + "4: List by priority\n"
                 + "5: List by urgency"
-                + "6: List completed");
+                + "6: List completed"
+                + "7: List tasks retaining to a keyword");
         int choice = Input.reader.nextInt();
         Input.reader.nextLine();
-        if (1 > choice || choice > 6) {
+        if (1 > choice || choice > 7) {
             System.out.println("Invalid choice. please Enter another choice.");
         }
         switch (choice) {
@@ -108,6 +109,9 @@ public class Main {
                 break;
             case 6:
                 userInterface.listCompletedTasks();
+                break;
+            case 7:
+                userInterface.listTasksRetainingTo();
                 break;
             default:
         }

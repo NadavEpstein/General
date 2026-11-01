@@ -189,4 +189,19 @@ public class TaskManager {
 
         return taggedTasks;
     }
+
+    public List<Task> getTasksRetainingTo(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            System.out.println("Invalid keyword. Returning NULL.");
+            return null;
+        }
+        List<Task> relevant = new ArrayList<>();
+        for (Task t : tasks.values()) {
+            if (t.retainsTo(keyword)) {
+                relevant.add(t);
+            }
+        }
+
+        return relevant;
+    }
 }
