@@ -1,45 +1,38 @@
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
-    private final Shop shop;
-    private final OrderManager manager;
-    private Customer customer;
-    private int ID;
-    private Map<Integer, Integer> products;
+    private final int ID;
+    private final Customer customer;
+    private final List<OrderItem> items;
+    private final int totalPrice;
     private Status status;
-    private int price;
 
-    public Order(Shop shop, Customer customer, int ID,
-                 Map<Integer, Integer> products, int price) throws IllegalArgumentException {
+    public Order(int ID, Customer customer, List<OrderItem> items, int totalPrice) {
+        if (ID < 1 || customer == null || items == null || items.isEmpty() || totalPrice < 0)
+            throw new IllegalArgumentException("Invalid order data");
 
-        if (customer == null || shop == null || ID < 1 || products == null)
-            throw new IllegalArgumentException("Invalid shop, customer, ID or product list");
-
-        this.customer = customer;
-        this.shop = shop;
-        this.manager = shop.getOrderManager();
         this.ID = ID;
+        this.customer = customer;
+        this.items = new ArrayList<>(items);
+        this.totalPrice = totalPrice;
         this.status = Status.PENDING;
-        this.price = price;
-
-        this.products.putAll(products);
     }
 
-    public Order copy() {
-        Order copy = new Order(
-                this.shop,
-                this.customer,
-                this.ID,
-                this.products,
-                this.price
-        );
-
-        copy.status = this.status;
-        return copy;
+    private Order(Order original) {
+        this.ID = original.ID;
+        this.customer = original.customer;
+        this.items = new ArrayList<>(original.items);
+        this.totalPrice = original.totalPrice;
+        this.status = original.status;
     }
 
-    public int getID() {
-        return this.ID;
-    }
+    public Order copy() { return new Order(this); }
+    public int getID() { return ID; }
+    public Customer getCustomer() { return customer; }
+    public List<OrderItem> getItems() { return List.copyOf(items); }
+    public int getTotalPrice() { return totalPrice; }
+    public Status getStatus() { return status; }
 
+    void markCompleted() { status = Status.COMPLETED; }
 }

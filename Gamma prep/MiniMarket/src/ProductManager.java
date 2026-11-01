@@ -8,10 +8,7 @@ public class ProductManager {
 
     public List<Product> getProducts() {
         List<Product> result = new ArrayList<>();
-
-        for (Product p : products.values())
-            result.add(p.copy());
-
+        for (Product p : products.values()) result.add(p.copy());
         return result;
     }
 
@@ -20,34 +17,25 @@ public class ProductManager {
         return product == null ? null : product.copy();
     }
 
-    public boolean exists(int id) {
-        return products.containsKey(id);
-    }
+    public boolean exists(int id) { return products.containsKey(id); }
 
     public void addProduct(Product product) {
         if (product == null || exists(product.getID()))
             throw new IllegalArgumentException("Invalid or duplicate product");
-
         products.put(product.getID(), product.copy());
     }
 
     public Product takeProduct(int id, int quantity) {
         Product product = products.get(id);
-
-        if (product == null || quantity <= 0 || quantity > product.getStock())
-            return null;
-
+        if (product == null || quantity <= 0 || quantity > product.getStock()) return null;
         product.setStock(product.getStock() - quantity);
         return product.copy();
     }
 
     public Product addExistingProduct(int id, int quantity) {
         Product product = products.get(id);
-
-        if (product == null || quantity <= 0)
-            return null;
-
-        product.setStock(product.getStock() + quantity);
+        if (product == null || quantity <= 0) return null;
+        product.setStock(Math.addExact(product.getStock(), quantity));
         return product.copy();
     }
 }

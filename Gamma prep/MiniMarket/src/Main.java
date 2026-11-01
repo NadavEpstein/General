@@ -3,40 +3,22 @@ public class Main {
         Shop shop = new Shop();
         ProductManager manager = shop.getProductManager();
 
-        Product laptop = new Product(1, "Laptop", 3000, 5);
-        Product mouse = new Product(2, "Mouse", 100, 10);
+        manager.addProduct(new Product(1, "Laptop", 3000, 5));
+        manager.addProduct(new Product(2, "Mouse", 100, 10));
 
-        manager.addProduct(laptop);
-        manager.addProduct(mouse);
-
-        Customer customer = new Customer(
-                1, "John Smith", "john@example.com"
-        );
-
+        Customer customer = new Customer(1, "John Smith", "john@example.com");
         Cart cart = new Cart(customer, shop);
-
-        System.out.println("Welcome, " + customer.getName() + "!");
 
         cart.addProduct(1, 2);
         cart.addProduct(2, 3);
         cart.addProduct(2, 2);
 
-        System.out.println("\nShopping cart:");
+        System.out.println("Cart total: " + cart.getTotalPrice() + " NIS");
+        Order order = cart.placeOrder();
 
-        for (Product product : cart.getProducts()) {
-            System.out.println(
-                    product.getName() + " - " +
-                            cart.getQuantity(product.getID()) + " x " +
-                            product.getPrice() + " NIS"
-            );
-        }
-
-        System.out.println("\nTotal: " + cart.calculateTotalPrice() + " NIS");
-
-        cart.removeProduct(2, 1);
-
-        System.out.println(
-                "Updated total: " + cart.calculateTotalPrice() + " NIS"
-        );
+        System.out.println("Created order #" + order.getID()
+                + " for " + order.getTotalPrice() + " NIS");
+        System.out.println("Status: " + order.getStatus());
+        System.out.println("Orders stored: " + shop.getOrderManager().getOrders().size());
     }
 }
