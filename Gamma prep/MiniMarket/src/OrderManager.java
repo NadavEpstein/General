@@ -7,8 +7,9 @@ public class OrderManager {
     private final Map<Integer, Order> orders = new HashMap<>();
     private int nextID = 1;
 
-    public Order createOrder(Customer customer, List<OrderItem> items, int totalPrice) {
-        Order order = new Order(nextID, customer, items, totalPrice);
+    public Order createOrder(Customer customer, List<OrderItem> items, int totalPrice, String paymentMethodName) {
+        PaymentMethod paymentMethod = PaymentMethodProvider.providePaymentMathod(paymentMethodName);
+        Order order = new Order(nextID, customer, items, totalPrice, paymentMethod);
         orders.put(nextID, order);
         nextID++;
         return order.copy();

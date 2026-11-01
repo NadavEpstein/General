@@ -7,9 +7,10 @@ public class Order {
     private final List<OrderItem> items;
     private final int totalPrice;
     private Status status;
+    private PaymentMethod paymentMethod;
 
-    public Order(int ID, Customer customer, List<OrderItem> items, int totalPrice) {
-        if (ID < 1 || customer == null || items == null || items.isEmpty() || totalPrice < 0)
+    public Order(int ID, Customer customer, List<OrderItem> items, int totalPrice, PaymentMethod paymentMethod) {
+        if (ID < 1 || customer == null || items == null || items.isEmpty() || totalPrice < 0 || paymentMethod == null)
             throw new IllegalArgumentException("Invalid order data");
 
         this.ID = ID;
@@ -17,6 +18,7 @@ public class Order {
         this.items = new ArrayList<>(items);
         this.totalPrice = totalPrice;
         this.status = Status.PENDING;
+        this.paymentMethod = paymentMethod;
     }
 
     private Order(Order original) {
@@ -25,6 +27,7 @@ public class Order {
         this.items = new ArrayList<>(original.items);
         this.totalPrice = original.totalPrice;
         this.status = original.status;
+        this.paymentMethod = original.paymentMethod;
     }
 
     public Order copy() { return new Order(this); }

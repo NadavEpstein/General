@@ -9,9 +9,12 @@ public class Shop {
     public ProductManager getProductManager() { return productManager; }
     public OrderManager getOrderManager() { return orderManager; }
 
-    Order createOrder(Customer customer, Map<Integer, Integer> cartProducts) {
+    Order createOrder(Customer customer, Map<Integer, Integer> cartProducts, String pMethodName) {
         if (customer == null || cartProducts == null || cartProducts.isEmpty())
             throw new IllegalArgumentException("Cannot create an empty order");
+        if (pMethodName == null || pMethodName.isBlank()) {
+            throw new IllegalArgumentException("Invalid payment method");
+        }
 
         List<OrderItem> items = new ArrayList<>();
         int totalPrice = 0;
@@ -27,6 +30,6 @@ public class Shop {
             items.add(item);
             totalPrice = Math.addExact(totalPrice, item.getSubtotal());
         }
-        return orderManager.createOrder(customer, items, totalPrice);
+        return orderManager.createOrder(customer, items, totalPrice, pMethodName);
     }
 }
