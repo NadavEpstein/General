@@ -10,6 +10,7 @@ public class Product {
     public Product(int ID, String name, int price, int stock) throws IllegalArgumentException{
         if (ID < 1) { throw new IllegalArgumentException("Invalid ID"); }
         if (name == null || name.isBlank()) { throw new IllegalArgumentException("Invalid name"); }
+        if (price < 0) { throw new IllegalArgumentException("Invalid price"); }
         if (stock < 0) { throw new IllegalArgumentException("Invalid stock"); }
 
         this.ID = ID;

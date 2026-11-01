@@ -5,53 +5,64 @@ import java.util.Map;
 
 public class ProductManager {
 
-    private static Map<Integer, Product> products;
+    private Map<Integer, Product> products;
 
     public ProductManager() {
         this.products = new HashMap<>();
     }
 
-    public static List<Product> getProducts() {
+    public ProductManager copy() {
+        ProductManager copy = new ProductManager();
+
+        for (Product p : this.products.values()) {
+            copy.products.put(p.getID(), p.copy());
+        }
+
+        return copy;
+    }
+
+    public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
-        for (Product p : ProductManager.products.values()) {
+        for (Product p : this.products.values()) {
             products.add(p.copy());
         }
 
         return products;
     }
 
-    public static Product getProduct(int ID) {
+    public Product getProduct(int ID) {
         if (!exists(ID)) {
             System.out.println("No such product");
             return null;
         }
 
         for (Product p : products.values()) {
-            if (p.getID() == ID) return p;
+            if (p.getID() == ID) return p.copy();
         }
 
         return null;
     }
 
-    public static boolean exists(int id) {
+    public boolean exists(int id) {
         return products.get(id) != null;
     }
 
-    public static Product takeProduct(int id, int quantity) {
+    public Product takeProduct(int id, int quantity) {
         if (!exists(id)) {
             System.out.println("No such product");
             return null;
         }
 
-        if (quantity > products.get(id).getStock()) {
-            System.out.println("Not available. Available stock: " + products.get(id).getStock());
+        if (quantity > products.get(id).getStock() || quantity < 0) {
+            System.out.println("Invalid quantity");
+            return null;
         }
 
         products.get(id).setStock(products.get(id).getStock() - quantity);
         return products.get(id).copy();
     }
 
-    public static void addProduct(Product product) {
+    public void addProduct(Product product) {
         if (product == null || exists(product.getID())) {
             throw new IllegalArgumentException("Invalid or duplicate product");
         }
@@ -59,7 +70,7 @@ public class ProductManager {
         products.put(product.getID(), product.copy());
     }
 
-    public static Product addExistingProduct(int id, int quantity) {
+    public Product addExistingProduct(int id, int quantity) {
         if (!exists(id)) {
             System.out.println("No such product");
             return null;
@@ -67,12 +78,10 @@ public class ProductManager {
 
         if (quantity < 0) {
             System.out.println("Invalid quantity");
+            return null;
         }
 
         products.get(id).setStock(products.get(id).getStock() + quantity);
         return products.get(id).copy();
     }
-
-
-
 }
